@@ -1,0 +1,161 @@
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: #fafafa;
+  color: #111827;
+}
+
+.summarizer-app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 5vw;
+  background-color: #fff;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 800;
+  color: #6366f1;
+}
+
+.links {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.links a {
+  text-decoration: none;
+  color: #4b5563;
+  font-weight: 500;
+}
+
+.links a:hover {
+  color: #111827;
+}
+
+.login-btn {
+  background-color: #6366f1;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.login-btn:hover {
+  background-color: #4f46e5;
+}
+
+.main-container {
+  flex: 1;
+  max-width: 800px;
+  margin: 60px auto;
+  width: 90%;
+}
+
+.text-center {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.title {
+  font-size: 36px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: #6b7280;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+  padding: 30px;
+}
+
+.input-wrapper {
+  display: flex;
+  gap: 10px;
+}
+
+.url-input {
+  flex: 1;
+  padding: 14px 20px;
+  font-size: 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.url-input:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.action-btn {
+  background-color: #111827;
+  color: white;
+  border: none;
+  padding: 0 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.action-btn:hover:not(:disabled) {
+  background-color: #374151;
+}
+
+.action-btn:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.result-area {
+  margin-top: 30px;
+  padding-top: 30px;
+  border-top: 1px solid #f3f4f6;
+}
+
+.result-area h3 {
+  font-size: 18px;
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #374151;
+}
+
+.markdown-body {
+  background: #f9fafb;
+  padding: 20px;
+  border-radius: 8px;
+  color: #1f2937;
+  line-height: 1.6;
+}
+
+.markdown-body p {
+  margin-top: 0;
+}
+
+footer {
+  text-align: center;
+  padding: 30px;
+  color: #9ca3af;
+  font-size: 14px;
+}

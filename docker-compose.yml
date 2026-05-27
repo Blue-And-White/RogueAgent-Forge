@@ -1,0 +1,247 @@
+version: '3.8'
+
+services:
+  scoreboard-backend:
+    build: 
+      context: ./scoreboard/backend
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+    networks:
+      - ctf_network
+
+  scoreboard-frontend:
+    build:
+      context: ./scoreboard/frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - scoreboard-backend
+    networks:
+      - ctf_network
+
+  e-commerce-backend:
+    build:
+      context: ./e-commerce-support/backend
+    ports:
+      - "8001:8001"
+    environment:
+      - PORT=8001
+      # Note: We do not hardcode API keys here; users should create .env in the backend folder or provide it here.
+    env_file:
+      - ./e-commerce-support/backend/.env
+    networks:
+      - ctf_network
+
+  e-commerce-frontend:
+    build:
+      context: ./e-commerce-support/frontend
+    ports:
+      - "3001:3001"
+    depends_on:
+      - e-commerce-backend
+    networks:
+      - ctf_network
+
+  hr-backend:
+    build:
+      context: ./hr-resume-screener/backend
+    ports:
+      - "8002:8002"
+    environment:
+      - PORT=8002
+    env_file:
+      - ./hr-resume-screener/backend/.env
+    networks:
+      - ctf_network
+
+  hr-frontend:
+    build:
+      context: ./hr-resume-screener/frontend
+    ports:
+      - "3002:3002"
+    depends_on:
+      - hr-backend
+    networks:
+      - ctf_network
+
+  bi-backend:
+    build:
+      context: ./internal-bi-analyst/backend
+    ports:
+      - "8003:8003"
+    environment:
+      - PORT=8003
+    env_file:
+      - ./internal-bi-analyst/backend/.env
+    networks:
+      - ctf_network
+
+  bi-frontend:
+    build:
+      context: ./internal-bi-analyst/frontend
+    ports:
+      - "3003:3003"
+    depends_on:
+      - bi-backend
+    networks:
+      - ctf_network
+
+  web-backend:
+    build:
+      context: ./web-summarizer/backend
+    ports:
+      - "8004:8004"
+    environment:
+      - PORT=8004
+    env_file:
+      - ./web-summarizer/backend/.env
+    networks:
+      - ctf_network
+
+  web-frontend:
+    build:
+      context: ./web-summarizer/frontend
+    ports:
+      - "3004:3004"
+    depends_on:
+      - web-backend
+    networks:
+      - ctf_network
+
+  code-backend:
+    build:
+      context: ./code-review-assistant/backend
+    ports:
+      - "8005:8005"
+    environment:
+      - PORT=8005
+    env_file:
+      - ./code-review-assistant/backend/.env
+    networks:
+      - ctf_network
+
+  code-frontend:
+    build:
+      context: ./code-review-assistant/frontend
+    ports:
+      - "3005:3005"
+    depends_on:
+      - code-backend
+    networks:
+      - ctf_network
+
+  note-backend:
+    build:
+      context: ./ai-note-taker/backend
+    ports:
+      - "8006:8006"
+    environment:
+      - PORT=8006
+    env_file:
+      - ./ai-note-taker/backend/.env
+    networks:
+      - ctf_network
+
+  note-frontend:
+    build:
+      context: ./ai-note-taker/frontend
+    ports:
+      - "3006:3006"
+    depends_on:
+      - note-backend
+    networks:
+      - ctf_network
+
+  copilot-backend:
+    build:
+      context: ./workspace-copilot/backend
+    ports:
+      - "8007:8007"
+    environment:
+      - PORT=8007
+    env_file:
+      - ./workspace-copilot/backend/.env
+    networks:
+      - ctf_network
+
+  copilot-frontend:
+    build:
+      context: ./workspace-copilot/frontend
+    ports:
+      - "3007:3007"
+    depends_on:
+      - copilot-backend
+    networks:
+      - ctf_network
+
+  travel-backend:
+    build:
+      context: ./travel-planner-bot/backend
+    ports:
+      - "8008:8008"
+    environment:
+      - PORT=8008
+    env_file:
+      - ./travel-planner-bot/backend/.env
+    networks:
+      - ctf_network
+
+  travel-frontend:
+    build:
+      context: ./travel-planner-bot/frontend
+    ports:
+      - "3008:3008"
+    depends_on:
+      - travel-backend
+    networks:
+      - ctf_network
+
+  expense-backend:
+    build:
+      context: ./expense-receipt-scanner/backend
+    ports:
+      - "8009:8009"
+    environment:
+      - PORT=8009
+    env_file:
+      - ./expense-receipt-scanner/backend/.env
+    networks:
+      - ctf_network
+
+  expense-frontend:
+    build:
+      context: ./expense-receipt-scanner/frontend
+    ports:
+      - "3009:3009"
+    depends_on:
+      - expense-backend
+    networks:
+      - ctf_network
+
+  rag-backend:
+    build:
+      context: ./enterprise-kb-rag/backend
+    ports:
+      - "8010:8010"
+    environment:
+      - PORT=8010
+    env_file:
+      - ./enterprise-kb-rag/backend/.env
+    networks:
+      - ctf_network
+
+  rag-frontend:
+    build:
+      context: ./enterprise-kb-rag/frontend
+    ports:
+      - "3010:3010"
+    depends_on:
+      - rag-backend
+    networks:
+      - ctf_network
+
+networks:
+  ctf_network:
+    driver: bridge

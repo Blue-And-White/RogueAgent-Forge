@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+pydantic
+litellm
+python-dotenv
+sqlite3; sys_platform == "win32"
