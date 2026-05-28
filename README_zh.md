@@ -2,70 +2,78 @@
 
 [English Document](README.md)
 
-**RogueAgent Forge** 是一个专注于 AI 系统与 AI Agent 安全的综合性漏洞靶场（Cyber Range）与基准测试项目。它旨在模拟包含致命安全缺陷的真实 Web 应用与自主型 AI 智能体。
+欢迎来到 **RogueAgent Forge**。这是一个全面、可交互的 AI Agent 安全靶场，包含 **20 个独立的安全靶机**。本项目模拟了真实的 AI 业务场景（如智能客服、AI 运维助理、HR 分析器等），并在其中复现了针对大语言模型 (LLM) 和智能体 (Agent) 的典型高危漏洞。
 
 本项目旨在帮助安全研究人员、开发者以及 AI 工程师深入理解、实践并防御诸如 **OWASP Top 10 for LLM Applications**、MITRE ATLAS 以及其他新兴 AI 威胁模型中定义的各类漏洞。
 
+本项目仅供 **个人学习与安全研究使用**，**严禁用于商业用途**。
+
 ## 🎯 架构与特性
 
-- **10 个独立靶机 (第一/第二阶段):** 每个靶机都是一个独立隔离的模拟商业应用（如电商客服、HR 简历筛选系统、差旅规划助手），并集成了易受攻击的 AI 助手。
+- **20 个独立靶机:** 每个靶机都是一个独立隔离的模拟商业应用，并集成了易受攻击的 AI 助手。
 - **全面的漏洞覆盖:** 涵盖直接提示词注入、间接提示词注入、AI 辅助 XSS、数据外带泄露、过度授权 (Excessive Agency)、沙箱逃逸导致的 RCE，以及不安全的 RAG 访问控制等。
 - **CTF 模式:** 每个靶机都包含一个隐藏的 `Flag`。攻击者必须通过利用 AI 系统的漏洞提取或生成 Flag，并提交至中心化的计分板 (Scoreboard)。
 - **沉浸式伪装:** 在前端页面或后端 API 中，不会出现任何“靶机”、“基准测试”等元数据提示，它们看起来就是正常运作的商业产品。
 - **多模型兼容:** 后端使用 `litellm`，支持无缝接入 OpenAI、Anthropic 等各大主流大模型 API 端点。
 
-## 🚀 快速开始
+## 🎯 靶场矩阵 (20 个挑战)
 
-### 环境要求
-- Docker & Docker Compose
-- Node.js (用于本地非容器环境开发)
-- Python 3.9+ (用于本地非容器环境开发)
+靶机难度由浅入深，覆盖从基础提示词注入到复杂 Agent 利用链。
 
-### 部署指南
+### 阶段一：初出茅庐 (The Basics)
+1. **`prompt-injection-basics`** (AI 极速翻译官): 经典的“忽略之前指令”基础提示词注入。
+2. **`system-prompt-leak`** (智能文案助手): 诱导 AI 泄露其隐藏的开发者系统指令。
+3. **`jailbreak-obfuscation`** (心灵导师 AI): 利用字符混淆和角色扮演绕过安全护栏机制。
+4. **`ssrf-agent`** (AI 网页摘要器): 滥用 AI 的网络请求工具进行内部网络的 SSRF 探测。
+5. **`data-exfiltration`** (个人日记助手): 诱导 AI 渲染带有攻击者 Webhook 的 Markdown 图片以窃取上下文敏感信息。
 
-所有靶机和中心化计分板均由根目录下的 `docker-compose.yml` 统一管理。
+### 阶段二：Agent 缺陷 (Agentic Flaws)
+6. **`rbac-bypass`** (企业内部网关助手): 通过注入指令越权调用受 Role-Based Access Control 保护的内部 API。
+7. **`sql-injection-agent`** (智能数据库查询终端): 通过污染上下文，诱骗 AI 拼接恶意条件造成越权数据读取。
+8. **`xss-in-chat`** (AI 在线客服): 通过向 AI 注入恶意 Payload，实现对话框中的存储型跨站脚本攻击 (XSS)。
+9. **`command-injection-agent`** (智能网络排障终端): 逃逸 AI Tool 的参数隔离，实现底层 Shell 的命令注入执行。
+10. **`enterprise-kb-rag`** (内部 RAG 知识库问答): 绕过 RAG 检索阶段的访问控制，窃取高权限绝密文档。
 
-1. **配置 API Keys:**
-   对于您想要运行的靶机，进入其 `backend` 目录，将 `.env.example` 复制为 `.env`，并填入您的 LLM API Key（例如 `OPENAI_API_KEY`）。
-   
-2. **启动靶场:**
-   您可以一键启动整个靶场，也可以单独拉起某个靶机。
-   ```bash
-   # 启动中心计分板 (Scoreboard)
-   docker-compose up -d scoreboard-frontend
-   
-   # 单独启动某个靶机 (例如 Target 1: e-commerce-support)
-   docker-compose up -d e-commerce-frontend
-   
-   # 或者一次性启动所有服务
-   docker-compose up -d
-   ```
+### 阶段三：架构与业务安全 (Architecture & Flow)
+11. **`semantic-cache-poisoning`** (AI 极速问答助手): 污染 AI 语义缓存，实现针对后续访问用户的 XSS 攻击。
+12. **`multi-agent-orchestrator`** (智能工厂调度中枢): 多智能体系统中的级联注入 (Planner Agent 污染导致 Executor Agent 执行危险操作)。
+13. **`insecure-plugin-auth`** (AI 账号管家): 插件调用设计缺陷，导致 AI 被利用执行无鉴权的敏感越权操作。
+14. **`context-overflow-reviewer`** (智能法务合同审查员): 上下文溢出攻击，用巨量无关文本将恶意指令挤出安全网关的视野。
+15. **`feedback-data-poisoning`** (AI 自适应在线客服): 利用业务反馈学习机制投毒，污染 AI 系统记忆。
 
-3. **访问靶机:**
-   - **计分板:** `http://localhost:3000`
-   - **靶机 1 (电商客服):** `http://localhost:3001`
-   - **靶机 2 (HR 简历筛选):** `http://localhost:3002`
-   - ...以此类推。具体端口和说明请参阅各个靶机目录。
+### 阶段四：终极利用链 (The Grand Finale)
+16. **`obfuscated-prompt-bypass`** (安全代码翻译器): 极严 WAF 防护下的 Base64 编码混淆注入绕过。
+17. **`rag-document-poisoning`** (企业文档分析器): RAG 间接注入，通过恶意 PDF/TXT 上传文件从侧面夺舍 AI。
+18. **`devops-path-traversal`** (AI 运维诊断助手): 利用 AI 的日志读取工具造成目录穿越与任意文件读取 (LFI)。
+19. **`nl2sql-injection`** (数据库自然语言查询): 自然语言转 SQL 注入，指使 AI 亲自写出 `UNION SELECT` 等恶意代码。
+20. **`server-management-copilot`** (高级服务器管家): 终极漏洞链，目录穿越覆写脚本 + 预设脚本执行 = 远程命令执行 (RCE)。
 
-## 📖 靶机目录库
+---
 
-每个文件夹代表一个特定漏洞场景。请查看每个靶机目录内的 `README.md`，了解详细的漏洞背景和攻击复现指南 (Walkthrough)。
+## 🚀 如何启动
 
-1. `e-commerce-support` - 基础提示词注入 (Prompt Injection)
-2. `hr-resume-screener` - 间接提示词注入 (Indirect Prompt Injection)
-3. `internal-bi-analyst` - 数据外带 / 库表窃取 (Data Exfiltration)
-4. `web-summarizer` - AI 驱动的 SSRF
-5. `code-review-assistant` - 沙箱逃逸 / RCE
-6. `ai-note-taker` - AI 辅助的 XSS (不安全输出处理)
-7. `workspace-copilot` - 过度授权 / 权限校验绕过
-8. `travel-planner-bot` - 敏感信息泄露 / 认知绕过越狱
-9. `expense-receipt-scanner` - 图像多模态提示词注入
-10. `enterprise-kb-rag` - 不安全的 RAG 访问控制 / 语境投毒
+### 方案 A：一键启动单个靶机（推荐）
+这 20 个靶机的目录下都内置了 `start.sh` 启动脚本。
+只需进入你想体验的关卡，运行它，它会自动引导你配置 API Key，并仅启动该关卡所需的服务。
 
-## ⚠️ 许可协议与免责声明
+```bash
+cd prompt-injection-basics
+./start.sh
+```
 
-本项目采用 **Creative Commons Attribution-NonCommercial 4.0 International Public License (CC BY-NC 4.0)** 协议。
-- 允许将本项目用于个人学习、学术研究等非商业教育用途。
-- **严禁用于任何商业用途。**
+### 方案 B：启动整个靶场矩阵
+如果你想一次性跑满 20 个靶机，请在项目根目录使用全局脚本。
+*注意：你需要先确认已正确配置了各个靶机的 `backend/.env`。*
 
-**免责声明:** 本项目为故意留存漏洞的测试环境。**绝对不要**在公网或生产服务器上直接部署这些应用。对于滥用本仓库中演示的技术去攻击真实系统所造成的任何后果，作者概不负责。
+- **全局启动**: `./start_all.sh`
+- **全局清理**: `./stop_all.sh` (停止并清理所有容器和悬空网络)
+
+---
+
+## 📖 靶机文档与攻略
+每一个靶机的独立文件夹中都有一份 `README.md`。里面详细说明了：
+- 靶机的**漏洞背景** (OWASP 对应项)。
+- 靶机的**业务场景与目标 Flag**。
+- 一份详细的 **通关攻略 (Attack Walkthrough)**，手把手教你如何拿到 Flag。
+
+**祝你 Hack 得开心！**
