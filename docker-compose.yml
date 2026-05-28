@@ -242,6 +242,226 @@ services:
     networks:
       - ctf_network
 
+  cache-backend:
+    build:
+      context: ./semantic-cache-poisoning/backend
+    ports:
+      - "8011:8011"
+    environment:
+      - PORT=8011
+    env_file:
+      - ./semantic-cache-poisoning/backend/.env
+    networks:
+      - ctf_network
+
+  cache-frontend:
+    build:
+      context: ./semantic-cache-poisoning/frontend
+    ports:
+      - "3011:3011"
+    depends_on:
+      - cache-backend
+    networks:
+      - ctf_network
+
+  orchestrator-backend:
+    build:
+      context: ./multi-agent-orchestrator/backend
+    ports:
+      - "8012:8012"
+    environment:
+      - PORT=8012
+    env_file:
+      - ./multi-agent-orchestrator/backend/.env
+    networks:
+      - ctf_network
+
+  orchestrator-frontend:
+    build:
+      context: ./multi-agent-orchestrator/frontend
+    ports:
+      - "3012:3012"
+    depends_on:
+      - orchestrator-backend
+    networks:
+      - ctf_network
+
+  plugin-auth-backend:
+    build:
+      context: ./insecure-plugin-auth/backend
+    ports:
+      - "8013:8013"
+    environment:
+      - PORT=8013
+    env_file:
+      - ./insecure-plugin-auth/backend/.env
+    networks:
+      - ctf_network
+
+  plugin-auth-frontend:
+    build:
+      context: ./insecure-plugin-auth/frontend
+    ports:
+      - "3013:3013"
+    depends_on:
+      - plugin-auth-backend
+    networks:
+      - ctf_network
+
+  reviewer-backend:
+    build:
+      context: ./context-overflow-reviewer/backend
+    ports:
+      - "8014:8014"
+    environment:
+      - PORT=8014
+    env_file:
+      - ./context-overflow-reviewer/backend/.env
+    networks:
+      - ctf_network
+
+  reviewer-frontend:
+    build:
+      context: ./context-overflow-reviewer/frontend
+    ports:
+      - "3014:3014"
+    depends_on:
+      - reviewer-backend
+    networks:
+      - ctf_network
+
+  feedback-backend:
+    build:
+      context: ./feedback-data-poisoning/backend
+    ports:
+      - "8015:8015"
+    environment:
+      - PORT=8015
+    env_file:
+      - ./feedback-data-poisoning/backend/.env
+    networks:
+      - ctf_network
+
+  feedback-frontend:
+    build:
+      context: ./feedback-data-poisoning/frontend
+    ports:
+      - "3015:3015"
+    depends_on:
+      - feedback-backend
+    networks:
+      - ctf_network
+
+  obfuscated-backend:
+    build:
+      context: ./obfuscated-prompt-bypass/backend
+    ports:
+      - "8016:8016"
+    environment:
+      - PORT=8016
+    env_file:
+      - ./obfuscated-prompt-bypass/backend/.env
+    networks:
+      - ctf_network
+
+  obfuscated-frontend:
+    build:
+      context: ./obfuscated-prompt-bypass/frontend
+    ports:
+      - "3016:3016"
+    depends_on:
+      - obfuscated-backend
+    networks:
+      - ctf_network
+
+  rag-poison-backend:
+    build:
+      context: ./rag-document-poisoning/backend
+    ports:
+      - "8017:8017"
+    environment:
+      - PORT=8017
+    env_file:
+      - ./rag-document-poisoning/backend/.env
+    networks:
+      - ctf_network
+
+  rag-poison-frontend:
+    build:
+      context: ./rag-document-poisoning/frontend
+    ports:
+      - "3017:3017"
+    depends_on:
+      - rag-poison-backend
+    networks:
+      - ctf_network
+
+  devops-backend:
+    build:
+      context: ./devops-path-traversal/backend
+    ports:
+      - "8018:8018"
+    environment:
+      - PORT=8018
+    env_file:
+      - ./devops-path-traversal/backend/.env
+    networks:
+      - ctf_network
+
+  devops-frontend:
+    build:
+      context: ./devops-path-traversal/frontend
+    ports:
+      - "3018:3018"
+    depends_on:
+      - devops-backend
+    networks:
+      - ctf_network
+
+  nl2sql-backend:
+    build:
+      context: ./nl2sql-injection/backend
+    ports:
+      - "8019:8019"
+    environment:
+      - PORT=8019
+    env_file:
+      - ./nl2sql-injection/backend/.env
+    networks:
+      - ctf_network
+
+  nl2sql-frontend:
+    build:
+      context: ./nl2sql-injection/frontend
+    ports:
+      - "3019:3019"
+    depends_on:
+      - nl2sql-backend
+    networks:
+      - ctf_network
+
+  server-copilot-backend:
+    build:
+      context: ./server-management-copilot/backend
+    ports:
+      - "8020:8020"
+    environment:
+      - PORT=8020
+    env_file:
+      - ./server-management-copilot/backend/.env
+    networks:
+      - ctf_network
+
+  server-copilot-frontend:
+    build:
+      context: ./server-management-copilot/frontend
+    ports:
+      - "3020:3020"
+    depends_on:
+      - server-copilot-backend
+    networks:
+      - ctf_network
+
 networks:
   ctf_network:
     driver: bridge

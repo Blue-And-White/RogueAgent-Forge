@@ -1,0 +1,124 @@
+body {
+  margin: 0;
+  font-family: 'Courier New', Courier, monospace;
+  background-color: #121212;
+  color: #00ff00;
+}
+
+.factory-app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.header {
+  background-color: #1e1e1e;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #00ff00;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.status {
+  font-size: 14px;
+  color: #00ff00;
+  animation: blink 2s infinite;
+}
+
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.terminal {
+  flex: 1;
+  max-width: 1000px;
+  background-color: #000;
+  border: 1px solid #333;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.1);
+}
+
+.terminal-history {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.log-entry {
+  margin-bottom: 15px;
+  line-height: 1.4;
+}
+
+.prompt {
+  color: #888;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.log-entry.user .output {
+  color: #fff;
+}
+
+.log-entry.assistant .output {
+  color: #00ff00;
+}
+
+.terminal-input {
+  display: flex;
+  padding: 20px;
+  background-color: #111;
+  border-top: 1px solid #333;
+}
+
+.terminal-input input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 16px;
+  outline: none;
+}
+
+.terminal-input button {
+  background: transparent;
+  border: 1px solid #00ff00;
+  color: #00ff00;
+  padding: 5px 15px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+
+.terminal-input button:hover:not(:disabled) {
+  background: #00ff00;
+  color: #000;
+}
+
+.terminal-input button:disabled {
+  border-color: #555;
+  color: #555;
+  cursor: not-allowed;
+}
+
+.output.blink {
+  animation: blink 1s infinite;
+}

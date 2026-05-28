@@ -1,0 +1,1 @@
+echo 'Backup completed successfully'
